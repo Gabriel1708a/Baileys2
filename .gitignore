@@ -6,9 +6,12 @@ yarn-error.log*
 
 # Sessions and credentials
 sessions/
-*.json
 config/
 data/
+
+# Ignore specific JSON files but keep package.json
+*.json
+!package.json
 
 # Logs
 logs/

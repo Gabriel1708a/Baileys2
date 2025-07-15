@@ -1,0 +1,32 @@
+{
+  "name": "bot-admin-whatsapp",
+  "version": "1.0.0",
+  "description": "Bot Administrador para Grupos WhatsApp usando Baileys",
+  "main": "index.js",
+  "scripts": {
+    "start": "node start.js",
+    "dev": "nodemon start.js",
+    "direct": "node index.js",
+    "health": "node health-check.js",
+    "cleanup": "node cleanup.js",
+    "pm2": "pm2 start ecosystem.config.js",
+    "pm2-stop": "pm2 stop whatsapp-bot",
+    "pm2-restart": "pm2 restart whatsapp-bot",
+    "pm2-logs": "pm2 logs whatsapp-bot"
+  },
+  "dependencies": {
+    "@whiskeysockets/baileys": "^6.6.0",
+    "pino": "^8.17.2",
+    "qrcode-terminal": "^0.12.0",
+    "moment-timezone": "^0.5.44",
+    "node-cron": "^3.0.3",
+    "fs-extra": "^11.2.0",
+    "axios": "^1.6.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  },
+  "keywords": ["whatsapp", "bot", "baileys", "admin"],
+  "author": "Bot Admin",
+  "license": "MIT"
+}
