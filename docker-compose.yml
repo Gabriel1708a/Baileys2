@@ -1,0 +1,64 @@
+version: '3.8'
+
+services:
+  whatsapp-bot:
+    build: .
+    container_name: whatsapp-bot
+    restart: unless-stopped
+    
+    environment:
+      - NODE_ENV=production
+      - TIMEZONE=America/Sao_Paulo
+    
+    volumes:
+      # Manter sessões e configurações persistentes
+      - ./sessions:/app/sessions
+      - ./config:/app/config
+      - ./data:/app/data
+    
+    # Logs
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    
+    # Verificação de saúde
+    healthcheck:
+      test: ["CMD", "node", "-e", "console.log('Bot running')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    
+    # Limites de recursos
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 512M
+        reservations:
+          cpus: '0.25'
+          memory: 256M
+
+  # Serviço opcional para monitoramento
+  watchtower:
+    image: containrrr/watchtower
+    container_name: watchtower
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - WATCHTOWER_CLEANUP=true
+      - WATCHTOWER_POLL_INTERVAL=3600
+    profiles:
+      - monitoring
+
+volumes:
+  sessions:
+  config:
+  data:
+
+networks:
+  default:
+    name: whatsapp-bot-network
